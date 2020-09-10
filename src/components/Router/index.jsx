@@ -14,12 +14,9 @@ import Store from '../../containers/Store';
 
 const AnimatedRouteExt = ({ exact, path, component }) => (
   <AnimatedRoute
-    atEnter={{ offset: -100 }}
-    atLeave={{ offset: -100 }}
-    atActive={{ offset: 0 }}
-    mapStyles={(styles) => ({
-      transform: `translateX(${styles.offset}%)`,
-    })}
+    atEnter={{ opacity: 0 }}
+    atLeave={{ opacity: 0 }}
+    atActive={{ opacity: 1 }}
     exact={exact}
     path={path}
     component={component}
@@ -50,7 +47,7 @@ function Router({ children }) {
       </Switch>
     </BrowserRouter>
   );
-};
+}
 
 Router.propTypes = {
   children: PropTypes.node.isRequired,

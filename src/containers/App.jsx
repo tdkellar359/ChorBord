@@ -37,11 +37,11 @@ const defaultTheme = {
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Router>
-        <div className="App">
+      <div className="App">
+        <Router>
           <Header minHeight={50} maxHeight={250} />
-        </div>
-      </Router>
+        </Router>
+      </div>
     </ThemeProvider>
   );
 }
