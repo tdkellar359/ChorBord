@@ -1,21 +1,7 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import styled from 'styled-components';
+import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import P from '../text/P';
-
-const BottomNavItemWrapper = styled(Link)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-  color: black;
-`;
-
-const PStyled = styled(P)`
-  margin: 0;
-  font-size: 0.75em;
-`;
+import { BottomNavItemWrapper, PStyled } from './styled';
 
 function BottomNavItem({
   icon,
