@@ -19,6 +19,8 @@ export const BottomNavContent = styled.div`
   justify-content: space-evenly;
   align-items: center;
   width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
 `;
 
 export const BottomNavItemWrapper = styled(Link)`

@@ -37,12 +37,12 @@ function Router({ children }) {
     <BrowserRouter>
       { children }
       <Switch>
-        <AnimatedRouteExt exact path="/" component={Home} />
+        <AnimatedRouteExt path="/home" component={Home} />
         <AnimatedRouteExt path="/profile" component={Profile} />
         <AnimatedRouteExt path="/settings" component={Settings} />
         <AnimatedRouteExt path="/store" component={Store} />
         <Route path="*">
-          <Redirect to="/" />
+          <Redirect to="/home" />
         </Route>
       </Switch>
     </BrowserRouter>

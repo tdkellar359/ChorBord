@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-const Card = styled.div`
+const Card = styled.div.attrs(() => ({
+  className: 'Card',
+}))`
   background-color: ${(props) => props.theme.surface};
   border: solid ${(props) => props.theme.surfaceDark} 1px;
   box-shadow: 0 0 8px 0 ${(props) => props.theme.surfaceDark};
