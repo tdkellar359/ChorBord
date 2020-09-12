@@ -1,47 +1,54 @@
-import React, { useContext } from 'react';
-import { ThemeContext } from 'styled-components';
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import Tab from '@material-ui/core/Tab';
 import HomeIcon from '@material-ui/icons/Home';
-import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import SettingsIcon from '@material-ui/icons/Settings';
-import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import PersonIcon from '@material-ui/icons/Person';
-import PersonOutlinedIcon from '@material-ui/icons/PersonOutlined';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
-import BottomNavItem from './BottomNavItem';
-import { BottomNavWrapper, BottomNavContent } from './styled';
+import { BottomNavWrapper, TabsStyled } from './styled';
+
+/* eslint-disable react/jsx-props-no-spreading */
+function LinkTab(props) {
+  return (
+    <Tab component={Link} {...props} />
+  );
+}
 
 function BottomNav() {
-  const theme = useContext(ThemeContext);
+  const location = useLocation();
+
+  const getValue = (pathname) => {
+    switch (pathname) {
+      case '/profile':
+        return 0;
+      case '/home':
+        return 1;
+      case '/store':
+        return 2;
+      case '/settings':
+        return 3;
+      default:
+        return 0;
+    }
+  };
+
+  const [value, setValue] = React.useState(getValue(location.pathname));
+
+  React.useEffect(() => {
+    setValue(getValue(location.pathname));
+  }, [location.pathname]);
 
   return (
     <BottomNavWrapper>
-      <BottomNavContent>
-        <BottomNavItem
-          icon={<PersonOutlinedIcon style={{ fontSize: '2em', color: theme.surfaceDark }} />}
-          iconActive={<PersonIcon style={{ fontSize: '2em' }} />}
-          route="/profile"
-          label="Profile"
-        />
-        <BottomNavItem
-          icon={<HomeOutlinedIcon style={{ fontSize: '2em', color: theme.surfaceDark }} />}
-          iconActive={<HomeIcon style={{ fontSize: '2em' }} />}
-          route="/home"
-          label="Home"
-        />
-        <BottomNavItem
-          icon={<ShoppingCartOutlinedIcon style={{ fontSize: '2em', color: theme.surfaceDark }} />}
-          iconActive={<ShoppingCartIcon style={{ fontSize: '2em' }} />}
-          route="/store"
-          label="Store"
-        />
-        <BottomNavItem
-          icon={<SettingsOutlinedIcon style={{ fontSize: '2em', color: theme.surfaceDark }} />}
-          iconActive={<SettingsIcon style={{ fontSize: '2em' }} />}
-          route="/settings"
-          label="Settings"
-        />
-      </BottomNavContent>
+      <TabsStyled
+        value={value}
+        onChange={(_, newValue) => setValue(newValue)}
+      >
+        <LinkTab icon={<PersonIcon />} label="Profile" to="/profile" />
+        <LinkTab icon={<HomeIcon />} label="Home" to="/home" />
+        <LinkTab icon={<ShoppingCartIcon />} label="Store" to="/store" />
+        <LinkTab icon={<SettingsIcon />} label="Settings" to="/settings" />
+      </TabsStyled>
     </BottomNavWrapper>
   );
 }

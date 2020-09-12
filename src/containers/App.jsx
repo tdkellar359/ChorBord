@@ -38,7 +38,7 @@ function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <div className="App">
-        <Router>
+        <Router disableSlide>
           <Header minHeight={50} maxHeight={250} />
         </Router>
       </div>

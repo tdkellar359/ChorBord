@@ -1,46 +1,58 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Slide from '@material-ui/core/Slide';
 import {
   BrowserRouter,
   Switch,
   Redirect,
   Route,
 } from 'react-router-dom';
-import { AnimatedRoute } from 'react-router-transition';
 import Home from '../../containers/Home';
 import Profile from '../../containers/Profile';
 import Settings from '../../containers/Settings';
 import Store from '../../containers/Store';
 
-const AnimatedRouteExt = ({ exact, path, component }) => (
-  <AnimatedRoute
-    atEnter={{ opacity: 0 }}
-    atLeave={{ opacity: 0 }}
-    atActive={{ opacity: 1 }}
-    exact={exact}
-    path={path}
-    component={component}
-  />
-);
-AnimatedRouteExt.propTypes = {
-  exact: PropTypes.bool,
-  path: PropTypes.string.isRequired,
-  component: PropTypes.elementType.isRequired,
-};
-
-AnimatedRouteExt.defaultProps = {
-  exact: false,
-};
-
-function Router({ children }) {
+function Router({ children, disableSlide }) {
   return (
     <BrowserRouter>
       { children }
       <Switch>
-        <AnimatedRouteExt path="/home" component={Home} />
-        <AnimatedRouteExt path="/profile" component={Profile} />
-        <AnimatedRouteExt path="/settings" component={Settings} />
-        <AnimatedRouteExt path="/store" component={Store} />
+        <Route path="/home">
+          {disableSlide
+            ? <Home />
+            : (
+              <Slide in direction="up">
+                <Home />
+              </Slide>
+            )}
+        </Route>
+        <Route path="/profile">
+          {disableSlide
+            ? <Profile />
+            : (
+              <Slide in direction="up">
+                <Profile />
+              </Slide>
+            )}
+        </Route>
+        <Route path="/settings">
+          {disableSlide
+            ? <Settings />
+            : (
+              <Slide in direction="up">
+                <Settings />
+              </Slide>
+            )}
+        </Route>
+        <Route path="/store">
+          {disableSlide
+            ? <Store />
+            : (
+              <Slide in direction="up">
+                <Store />
+              </Slide>
+            )}
+        </Route>
         <Route path="*">
           <Redirect to="/home" />
         </Route>
@@ -51,6 +63,11 @@ function Router({ children }) {
 
 Router.propTypes = {
   children: PropTypes.node.isRequired,
+  disableSlide: PropTypes.bool,
+};
+
+Router.defaultProps = {
+  disableSlide: false,
 };
 
 export default Router;

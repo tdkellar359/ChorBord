@@ -4,18 +4,21 @@ import RecentActivity from './RecentActivity';
 import Housemates from './Housemates';
 import HouseView from './HouseView';
 
-function Home() {
-  return (
-    <HomeWrapper>
+/* eslint-disable react/prefer-stateless-function */
+class Home extends React.Component {
+  render() {
+    return (
+      <HomeWrapper>
 
-      <HouseView />
+        <HouseView />
 
-      <RecentActivity />
+        <RecentActivity />
 
-      <Housemates />
+        <Housemates />
 
-    </HomeWrapper>
-  );
+      </HomeWrapper>
+    );
+  }
 }
 
 export default Home;

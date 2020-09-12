@@ -18,6 +18,8 @@ export const HeaderContentCollapsed = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0.5em 0;
+  z-index: 1000;
 `;
 
 export const HeaderContentCollapsedItem = styled.div`

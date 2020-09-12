@@ -1,8 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Chip from '@material-ui/core/Chip';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import Slide from '@material-ui/core/Slide';
 import {
   HeaderWrapper,
   HeaderContent,
@@ -13,29 +18,36 @@ import BottomNav from '../BottomNav';
 import ProfilePic from './ProfilePic';
 import P from '../text/P';
 
-function Header({ minHeight, maxHeight, disableCollapse }) {
-  const [opacity, setOpacity] = useState(0);
+/* eslint-disable react/jsx-props-no-spreading */
+function MenuItemLink({ children, ...rest }) {
+  return <MenuItem component={Link} {...rest}>{children}</MenuItem>;
+}
+MenuItemLink.propTypes = { children: PropTypes.node.isRequired };
+
+function Header({ disableCollapse }) {
+  const headerRef = React.useRef(null);
+  const [height, setHeight] = React.useState(0);
+  const [collapse, setCollapse] = React.useState(true);
+  const [anchorElt, setAnchorElt] = React.useState(null);
+
+  const onMenuButtonClick = (event) => {
+    setAnchorElt(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorElt(null);
+  };
 
   const handleScroll = disableCollapse ? null : () => {
-    // Current scroll position
-    const x = window.scrollY;
+    if (headerRef && headerRef.current) {
+      const scroll = window.scrollY;
+      const { clientHeight } = headerRef.current;
 
-    // 'Breakpoint' where opacity starts to change
-    const a = (maxHeight - minHeight) - 110;
-
-    // Arbitrary constant for shape
-    const b = -0.5;
-
-    // Logistic growth curve (with a shift)
-    const newOpacity = 1 / (1 + a * Math.exp(b * x + a));
-
-    if (newOpacity >= 0 && newOpacity <= 1) {
-      // Set opacity if within range
-      setOpacity(newOpacity);
-    } else if (opacity !== 1) {
-      // Set opacity to 1 if not already set
-      // This is to help avoid unecessary rerenders
-      setOpacity(1);
+      if (collapse && scroll >= clientHeight) {
+        setCollapse(false);
+      } else if (!collapse && scroll < clientHeight) {
+        setCollapse(true);
+      }
     }
   };
 
@@ -44,36 +56,57 @@ function Header({ minHeight, maxHeight, disableCollapse }) {
     // addEventListener will ignore calls with identical parameters
     document.addEventListener('scroll', handleScroll);
 
+    if (headerRef && headerRef.current && height === 0) {
+      setHeight(headerRef.current.clientHeight);
+    }
+
     // Return a teardown function.
     // Here we are removing the scroll event listener
     return () => document.removeEventListener('scroll', handleScroll);
-  });
+  }, [handleScroll, height]);
 
   return (
     <>
-      <HeaderWrapper style={{ height: `${maxHeight}px` }}>
-        <HeaderContentCollapsed style={{ height: `${minHeight}px`, opacity }}>
-          <HeaderContentCollapsedItem>
-            <Chip avatar={<Avatar>TK</Avatar>} label="Tristan Kellar" />
-          </HeaderContentCollapsedItem>
-          <HeaderContentCollapsedItem>
-            <MenuIcon fontSize="large" />
-          </HeaderContentCollapsedItem>
-        </HeaderContentCollapsed>
+      <HeaderWrapper ref={headerRef}>
+
+        <Slide direction="down" in={!collapse} mountOnEnter unmountOnExit>
+          <HeaderContentCollapsed>
+            <HeaderContentCollapsedItem>
+              <Chip avatar={<Avatar>TK</Avatar>} label="Tristan Kellar" />
+            </HeaderContentCollapsedItem>
+            <HeaderContentCollapsedItem>
+              <IconButton onClick={onMenuButtonClick}>
+                <MenuIcon fontSize="large" />
+              </IconButton>
+              <Menu
+                anchorEl={anchorElt}
+                open={Boolean(anchorElt)}
+                onClose={handleMenuClose}
+                keepMounted
+              >
+                <MenuItemLink to="/profile">Profile</MenuItemLink>
+                <MenuItemLink to="/home">Home</MenuItemLink>
+                <MenuItemLink to="/store">Store</MenuItemLink>
+                <MenuItemLink to="/settings">Settings</MenuItemLink>
+              </Menu>
+            </HeaderContentCollapsedItem>
+          </HeaderContentCollapsed>
+        </Slide>
+
         <HeaderContent>
           <ProfilePic diameter="100px" />
           <P>Tristan Kellar</P>
         </HeaderContent>
+
         <BottomNav />
+
       </HeaderWrapper>
-      <div style={{ height: `${maxHeight}px` }} />
+      <div style={{ height }} />
     </>
   );
 }
 
 Header.propTypes = {
-  minHeight: PropTypes.number.isRequired,
-  maxHeight: PropTypes.number.isRequired,
   disableCollapse: PropTypes.bool,
 };
 
