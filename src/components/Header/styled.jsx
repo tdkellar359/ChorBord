@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const HeaderWrapper = styled.div`
   position: absolute;
@@ -35,4 +36,21 @@ export const HeaderContent = styled.div`
   align-items: center;
   flex-direction: column;
   padding: 1em;
+
+  & p {
+    margin: 0.25em;
+  }
+
+  & p:not(:nth-child(2)) {
+    font-size: 0.85em;
+    font-style: italic;
+  }
+`;
+
+export const LinkStyled = styled(Link)`
+  text-decoration: none;
+  color: ${(props) => props.theme.primaryDark};
+  font-weight: bold;
+  margin-top: 0.25em;
+  font-size: 1.25em;
 `;

@@ -13,6 +13,7 @@ import {
   HeaderContent,
   HeaderContentCollapsed,
   HeaderContentCollapsedItem,
+  LinkStyled,
 } from './styled';
 import BottomNav from '../BottomNav';
 import ProfilePic from './ProfilePic';
@@ -84,10 +85,10 @@ function Header({ disableCollapse }) {
                 onClose={handleMenuClose}
                 keepMounted
               >
-                <MenuItemLink to="/profile">Profile</MenuItemLink>
-                <MenuItemLink to="/home">Home</MenuItemLink>
-                <MenuItemLink to="/store">Store</MenuItemLink>
-                <MenuItemLink to="/settings">Settings</MenuItemLink>
+                <MenuItemLink onClick={handleMenuClose} to="/profile">Profile</MenuItemLink>
+                <MenuItemLink onClick={handleMenuClose} to="/home">Home</MenuItemLink>
+                <MenuItemLink onClick={handleMenuClose} to="/market">Market</MenuItemLink>
+                <MenuItemLink onClick={handleMenuClose} to="/settings">Settings</MenuItemLink>
               </Menu>
             </HeaderContentCollapsedItem>
           </HeaderContentCollapsed>
@@ -95,13 +96,14 @@ function Header({ disableCollapse }) {
 
         <HeaderContent>
           <ProfilePic diameter="100px" />
-          <P>Tristan Kellar</P>
+          <LinkStyled to="/profile">Tristan Kellar</LinkStyled>
+          <P>Administrator</P>
         </HeaderContent>
 
         <BottomNav />
 
       </HeaderWrapper>
-      <div style={{ height }} />
+      <div style={{ height: `calc(${height}px - 2em)` }} />
     </>
   );
 }

@@ -23,7 +23,7 @@ function BottomNav() {
         return 0;
       case '/home':
         return 1;
-      case '/store':
+      case '/market':
         return 2;
       case '/settings':
         return 3;
@@ -46,7 +46,7 @@ function BottomNav() {
       >
         <LinkTab icon={<PersonIcon />} label="Profile" to="/profile" />
         <LinkTab icon={<HomeIcon />} label="Home" to="/home" />
-        <LinkTab icon={<ShoppingCartIcon />} label="Store" to="/store" />
+        <LinkTab icon={<ShoppingCartIcon />} label="Market" to="/market" />
         <LinkTab icon={<SettingsIcon />} label="Settings" to="/settings" />
       </TabsStyled>
     </BottomNavWrapper>

@@ -10,7 +10,7 @@ import {
 import Home from '../../containers/Home';
 import Profile from '../../containers/Profile';
 import Settings from '../../containers/Settings';
-import Store from '../../containers/Store';
+import Market from '../../containers/Market';
 
 function Router({ children, disableSlide }) {
   return (
@@ -44,12 +44,12 @@ function Router({ children, disableSlide }) {
               </Slide>
             )}
         </Route>
-        <Route path="/store">
+        <Route path="/market">
           {disableSlide
-            ? <Store />
+            ? <Market />
             : (
               <Slide in direction="up">
-                <Store />
+                <Market />
               </Slide>
             )}
         </Route>

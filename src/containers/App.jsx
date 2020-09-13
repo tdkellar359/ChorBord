@@ -11,9 +11,9 @@ const defaultTheme = {
   primaryDark: '#0093c4',
 
   // Secondary Colors
-  secondary: '',
-  secondaryLight: '',
-  secondaryDark: '',
+  secondary: '#ffab91',
+  secondaryLight: '#ffddc1',
+  secondaryDark: '#c97b63',
 
   // Primary Text Colors
   primaryText: '#000',
